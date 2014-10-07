@@ -1,19 +1,20 @@
 // --- Require Dependencies ----------------------------------------------------
 
-var  _ = require('lodash');
-var lx = require('../utils/lifx');
+var ee = require('../utils/events');
 
 // --- Module Exports ----------------------------------------------------------
 
 module.exports = function (io) {
-  listenToBulb(io);
+  listenToColors(io);
 };
 
 // --- Exported Functions ------------------------------------------------------
 
-function listenToBulb(io) {
-  lx.on('bulb', function (bulb) {
-    console.log('Found a bulb');
-    io.sockets.emit('lifx:bulb', bulb);
+function listenToColors(io) {
+  ee.on('power', function (state) {
+    io.sockets.emit('lifx:power', state);
+  });
+  ee.on('color', function (color) {
+    io.sockets.emit('lifx:color', color);
   });
 }

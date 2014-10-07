@@ -1,17 +1,19 @@
 // --- Require Dependencies ----------------------------------------------------
 
-var   http = require('http');
-var     fs = require('fs');
-var     io = require('socket.io');
-var config = require('config');
+var       http = require('http');
+var         fs = require('fs');
+var         io = require('socket.io');
+var     config = require('config');
 
-var    koa = require('koa');
-var  serve = require('koa-static');
+var        koa = require('koa');
+var      serve = require('koa-static');
+var bodyParser = require('koa-body-parser');
 
 // --- Setup Koa ---------------------------------------------------------------
 
 var app = koa();
 
+app.use(bodyParser());
 app.use(serve('./client'));
 
 // --- Setup Routes ------------------------------------------------------------

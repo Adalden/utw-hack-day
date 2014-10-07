@@ -17,6 +17,8 @@
   "dependencies": {
     "config": "^1.2.3",
     "koa": "^0.12.2",
+    "koa-body": "^0.3.0",
+    "koa-body-parser": "^1.1.0",
     "koa-route": "^2.1.0",
     "koa-static": "^1.4.7",
     "lifx": "^0.2.1",
