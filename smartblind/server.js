@@ -1,12 +1,18 @@
-Cylon = require('..');
+var app = require('express')();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
-Cylon.robot({
-  connection: { name: 'raspi', adaptor: 'raspi' },
-  device: { name: 'led', driver: 'led', pin: 11 },
+var SmartBlind = require('./smartblind');
 
-  work: function(my) {
-    every((1).second(), function() {
-      my.led.toggle();
-    });
-  }
-}).start();
+server.listen(80);
+
+app.get('/rotate/:degree', function (req, res) {
+  SmartBlind.rotate(req.params.degree);
+  res.send('ok');
+});
+
+io.on('connection', function (socket) {
+  SmartBlind.on('degree_changed', function(data) {
+    socket.emit('blind_degree_changed', data.degree);
+  });
+});
