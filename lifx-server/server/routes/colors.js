@@ -15,11 +15,8 @@ module.exports = function (app) {
   app.use(routes.post('/bright', setBrightness));
 };
 
-var LAST = {
-  h: 0,
-  s: 0,
-  l: 10000
-};
+var LAST = color.rgbToHsl(255, 0, 0);
+LAST.l = 10000;
 
 // --- Exported Functions ------------------------------------------------------
 
