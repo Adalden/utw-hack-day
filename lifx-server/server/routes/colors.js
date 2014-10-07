@@ -15,15 +15,13 @@ module.exports = function (app) {
   app.use(routes.post('/bright', setBrightness));
 };
 
-var LAST = {
-  h: 0,
-  s: 0,
-  l: 10000
-};
+var LAST = color.rgbToHsl(255, 0, 0);
+LAST.l = 10000;
 
 // --- Exported Functions ------------------------------------------------------
 
 function* setColor() {
+  console.log('setting color');
   var b = this.request.body;
   var hsl = color.rgbToHsl(b.r, b.g, b.b);
   hsl.l = LAST.l;

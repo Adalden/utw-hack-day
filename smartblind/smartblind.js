@@ -17,14 +17,13 @@ var robot = Cylon.robot({
       degree: my.servo.currentAngle()
     });
   },
-
-		
+	
   rotate: function(degree) {
-    this.servo.angle(degree);
-    ee.emit('degree_changed', {
-      degree: this.servo.currentAngle()
-    });
-  }
+   this.servo.angle(degree);
+      ee.emit('degree_changed', {
+        degree: this.servo.currentAngle()
+      });
+    }
 });
 
 // start working
