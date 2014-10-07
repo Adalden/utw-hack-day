@@ -1,5 +1,7 @@
 Our Hackathon Submission
 
+
+
 ##Lifx Server
 
 Use Node 0.11.13. cd into lifx-server. npm install. npm start.
@@ -34,3 +36,17 @@ Let's you know if a bulb was turned on or off
 
 ####lifx:color
 Let's you know if a bulb changed color
+
+
+
+##Leap Server
+
+Use Node 0.11.13. cd into leap-server. npm install. npm start.
+
+###Events
+
+####leap:swype-lr
+Let's you know when a Left/Right swype happened. Data is -1 or 1 (for left or right)
+
+####leap:swipe-tb
+Let's you know when a Top/Bottom swype happened. Data is -1 or 1 (for top or bottom)
