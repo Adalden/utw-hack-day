@@ -8,7 +8,7 @@ server.listen(80);
 
 app.get('/rotate/:degree', function (req, res) {
   console.log('Rotate servo: ' + req.params.degree);
-  SmartBlind.rotate(req.params.degree);
+  SmartBlind.rotate(parseInt(req.params.degree));
   res.send('ok');
 });
 
