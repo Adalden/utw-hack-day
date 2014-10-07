@@ -21,6 +21,7 @@ LAST.l = 10000;
 // --- Exported Functions ------------------------------------------------------
 
 function* setColor() {
+  console.log('setting color');
   var b = this.request.body;
   var hsl = color.rgbToHsl(b.r, b.g, b.b);
   hsl.l = LAST.l;

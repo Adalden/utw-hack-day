@@ -1,50 +1,36 @@
-document.getElementById('onBtn').addEventListener('click', function () {
-  axios.post('/on');
+socket = io.connect();
+
+socket.on('status', function (data) {
+  var parent = document.createElement('div');
+  parent.className = 'parent';
+
+  var date = document.createElement('div');
+  date.className = 'date';
+  date.textContent = getDate();
+  parent.appendChild(date);
+
+  var msg = document.createElement('div');
+  msg.className = 'msg';
+  msg.textContent = data;
+  parent.appendChild(msg);
+
+  document.getElementById('events').appendChild(parent);
 });
 
-document.getElementById('offBtn').addEventListener('click', function () {
-  axios.post('/off');
-});
-
-function setColor(obj) {
-  axios.post('/color', obj);
-};
-var dSetColor = debounce(setColor, 100);
-
-document.getElementById('color').addEventListener('change', function () {
-  var color = getColor(this.value);
-  dSetColor(color);
-});
-
-function setBright(obj) {
-  axios.post('/bright', obj);
-};
-var dSetBright = debounce(setBright, 100);
-
-document.getElementById('bright').addEventListener('change', function () {
-  dSetBright({ l: this.value });
-});
-
-
-function debounce(fn, time) {
-  var id;
-  return function (arg1) {
-    clearTimeout(id);
-    id = setTimeout(function () {
-      fn(arg1);
-    }, time);
-  }
+function getDate() {
+  var d = new Date();
+  var arr = [
+    d.getHours(),
+    ':',
+    pad(d.getMinutes()),
+    ' ',
+    pad(d.getSeconds())
+  ];
+  return arr.join('');
 }
 
-function getColor(hex) {
-  return {
-    r: hexToR(hex),
-    g: hexToG(hex),
-    b: hexToB(hex)
-  }
+function pad(el) {
+  el = '' + el;
+  el = el.length === 1 ? '0' + el : el;
+  return el;
 }
-
-function hexToR(h) {return parseInt((cutHex(h)).substring(0,2),16)}
-function hexToG(h) {return parseInt((cutHex(h)).substring(2,4),16)}
-function hexToB(h) {return parseInt((cutHex(h)).substring(4,6),16)}
-function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h}

@@ -48,5 +48,11 @@ Use Node 0.11.13. cd into leap-server. npm install. npm start.
 ####leap:swype-lr
 Let's you know when a Left/Right swype happened. Data is -1 or 1 (for left or right)
 
-####leap:swipe-tb
-Let's you know when a Top/Bottom swype happened. Data is -1 or 1 (for top or bottom)
+####leap:swype-ud
+Let's you know when an Up/Down swype happened. Data is -1 or 1 (for up or down)
+
+####leap:swype-bf
+Let's you know when a Back/Forward swype happened. Data is -1 or 1 (for back or forward)
+
+####leap:swype-all
+Let's you know when any swype happened. Data {x,y,z} (same as above 3)

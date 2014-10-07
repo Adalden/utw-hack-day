@@ -1,0 +1,35 @@
+body {
+  background-color: #777;
+}
+
+h2 {
+  text-align: center;
+  border-bottom: 1px solid #aaa;
+}
+
+#wrapper {
+  background-color: white;
+  padding: 50px;
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 50px;
+  border-radius: 5px;
+  box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.5);
+}
+
+#events .parent {
+  padding: 5px 0;
+}
+
+#events .parent:nth-child(2n+1) {
+  background-color: #ddd;
+}
+
+#events .date {
+  display: inline-block;
+  width: 100px;
+}
+
+#events .msg {
+  display: inline-block;
+}

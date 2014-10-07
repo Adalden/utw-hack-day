@@ -1,67 +1,43 @@
-// // --- Require Dependencies ----------------------------------------------------
+// --- Require Dependencies ----------------------------------------------------
 
-// var       http = require('http');
-// var         fs = require('fs');
-// var         io = require('socket.io');
-// var     config = require('config');
+var       http = require('http');
+var         fs = require('fs');
+var         io = require('socket.io');
+var   ioClient = require('socket.io-client');
+var     config = require('config');
 
-// var        koa = require('koa');
-// var      serve = require('koa-static');
-// var bodyParser = require('koa-body-parser');
+var        koa = require('koa');
+var      serve = require('koa-static');
 
-// // --- Setup Koa ---------------------------------------------------------------
+// --- Setup Koa ---------------------------------------------------------------
 
-// var app = koa();
+var app = koa();
 
-// app.use(bodyParser());
-// app.use(serve('./client'));
+app.use(serve('./client'));
 
-// // --- Setup Routes ------------------------------------------------------------
+var server = http.Server(app.callback());
 
-// fs.readdirSync(__dirname + '/routes').forEach(function (filename) {
-//   if (filename[0] === '.') return;
-//   require('./routes/' + filename)(app);
-// });
+// --- Setup Sockets -----------------------------------------------------------
 
-// var server = http.Server(app.callback());
+io = io(server);
 
-// // --- Setup Sockets -----------------------------------------------------------
-
-// // io = io(server);
-
-// // fs.readdirSync(__dirname + '/sockets').forEach(function (filename) {
-// //   if (filename[0] === '.') return;
-// //   require('./sockets/' + filename)(io);
-// // });
-
-// // --- Start Listening ---------------------------------------------------------
-
-// server.listen(config.port);
-// console.log('Server listening on port ' + config.port);
-
-
-
-
-
-
-var io = require('socket.io-client');
-var request = require('request');
-
-var socket = io.connect('http://localhost:4000');
-
-socket.on('leap:swype-lr', function (dir) {
-  var color = randomColor();
-  request({
-    method: 'POST',
-    url: 'http://localhost:3000/color',
-    json: color
-  });
+fs.readdirSync(__dirname + '/sockets').forEach(function (filename) {
+  if (filename[0] === '.') return;
+  require('./sockets/' + filename)(io);
 });
 
-function randomColor() {
-  return {
-    r: Math.floor(Math.random() * 255),
-    g: Math.floor(Math.random() * 255),
-    b: Math.floor(Math.random() * 255)
-  };
-}
+// --- Setup Connections -------------------------------------------------------
+
+var leapIo = ioClient.connect(config.leap);
+var lifxIo = ioClient.connect(config.lifx);
+// var blindsIo = ioClient.connect(config.blinds);
+
+fs.readdirSync(__dirname + '/connections').forEach(function (filename) {
+  if (filename[0] === '.') return;
+  require('./connections/' + filename)(io, leapIo, lifxIo); //, blindsIo);
+});
+
+// --- Start Listening ---------------------------------------------------------
+
+server.listen(config.port);
+console.log('Server listening on port ' + config.port);

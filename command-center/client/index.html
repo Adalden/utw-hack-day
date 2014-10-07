@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Lifx Control</title>
+    <title>Command Center</title>
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
-    <button id="onBtn" class="btn">On</button>
-    <button id="offBtn" class="btn">Off</button>
-    <input id="color" type="color">
-    <input id="bright" type="range" min="100" max="20000">
+    <div id="wrapper">
+      <h2>Events</h2>
+      <div id="events"></div>
+    </div>
 
-    <script src="js/axios.js"></script>
+    <script src="socket.io/socket.io.js"></script>
     <script src="js/main.js"></script>
   </body>
 <html>
