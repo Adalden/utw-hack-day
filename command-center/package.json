@@ -1,7 +1,7 @@
 {
   "name": "utw",
   "version": "0.0.0",
-  "description": "Lifx server for our Hackathon Submission",
+  "description": "Command Center server for our Hackathon Submission",
   "scripts": {
     "start": "node --harmony server/app.js"
   },
@@ -20,8 +20,9 @@
     "koa-body-parser": "^1.1.0",
     "koa-route": "^2.1.0",
     "koa-static": "^1.4.7",
-    "lifx": "^0.2.1",
     "lodash": "^2.4.1",
-    "socket.io": "^1.1.0"
+    "request": "^2.45.0",
+    "socket.io": "^1.1.0",
+    "socket.io-client": "^1.1.0"
   }
 }

@@ -16,17 +16,10 @@ var app = koa();
 app.use(bodyParser());
 app.use(serve('./client'));
 
-// --- Setup Routes ------------------------------------------------------------
-
-fs.readdirSync(__dirname + '/routes').forEach(function (filename) {
-  if (filename[0] === '.') return;
-  require('./routes/' + filename)(app);
-});
-
-var server = http.Server(app.callback());
 
 // --- Setup Sockets -----------------------------------------------------------
 
+var server = http.Server(app.callback());
 io = io(server);
 
 fs.readdirSync(__dirname + '/sockets').forEach(function (filename) {
