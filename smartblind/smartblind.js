@@ -18,7 +18,7 @@ var robot = Cylon.robot({
     });
   },
 
-
+		
   rotate: function(degree) {
     this.servo.angle(degree);
     ee.emit('degree_changed', {
@@ -30,4 +30,4 @@ var robot = Cylon.robot({
 // start working
 robot.start();
 
-module.export = robot;
+module.exports = robot;
