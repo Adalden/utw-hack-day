@@ -18,12 +18,17 @@ var robot = Cylon.robot({
     });
   },
 
-
-  rotate: function(degree) {
+  rotateServo: function(degree) {
     this.servo.angle(degree);
-    ee.emit('degree_changed', {
-      degree: this.servo.currentAngle()
-    });
+  },
+
+  commands: {
+    rotate:  function(degree) {
+      this.rotateServo.call(this, degree);
+      ee.emit('degree_changed', {
+        degree: this.servo.currentAngle()
+      });
+    }
   }
 });
 
