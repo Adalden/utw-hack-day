@@ -12,6 +12,13 @@ module.exports = function (app) {
   app.use(routes.post('/on', turnOn));
   app.use(routes.post('/off', turnOff));
   app.use(routes.post('/color', setColor));
+  app.use(routes.post('/bright', setBrightness));
+};
+
+var LAST = {
+  h: 0,
+  s: 0,
+  l: 10000
 };
 
 // --- Exported Functions ------------------------------------------------------
@@ -19,10 +26,15 @@ module.exports = function (app) {
 function* setColor() {
   var b = this.request.body;
   var hsl = color.rgbToHsl(b.r, b.g, b.b);
-  lx.lightsOn();
-  lx.lightsColour(hsl.h, hsl.s, 10000, 0x0dac, 300)
-  ee.emit('color', hsl);
-  this.body = 'Message Sent';
+  hsl.l = LAST.l;
+  LAST = hsl;
+  set.call(this);
+}
+
+function* setBrightness() {
+  var b = this.request.body;
+  LAST.l = b.l;
+  set.call(this);
 }
 
 function* turnOff() {
@@ -34,5 +46,12 @@ function* turnOff() {
 function* turnOn() {
   lx.lightsOn();
   ee.emit('power', 'on');
+  this.body = 'Message Sent';
+}
+
+function set() {
+  lx.lightsOn();
+  lx.lightsColour(LAST.h, LAST.s, LAST.l, 0x0dac, 300);
+  ee.emit('color', LAST);
   this.body = 'Message Sent';
 }
