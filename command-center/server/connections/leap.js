@@ -7,29 +7,36 @@ var      ee = require('../utils/events');
 // --- Module Exports ----------------------------------------------------------
 
 module.exports = function (io, leapIo, lifxIo, blindsIo) {
-  // ** On Leap Swype --> Randomize Lifx Bulb
+  // ** On Leap Swype Up/Down --> Lifx Bulb Dim/Undim
   leapIo.on('leap:swype-ud', function (dir) {
-    var color = randomColor();
-    postNewColor(color);
-    ee.emit('status', 'Leap Swype --> Random Lifx Color');
+    console.log('posting new color');
+    BRIGHT += 5000 * dir;
+    if (BRIGHT < 0) BRIGHT = 0;
+    if (BRIGHT > 20000) BRIGHT = 20000;
+    postNewBright();
+    var msg = dir === 1 ? 'Leap Swype Up --> Brighten Lifx Bulb' : 'Leap Swype Down --> Dim Lifx Bulb';
+    ee.emit('status', msg);
   });
 };
 
 // --- Private Functions -------------------------------------------------------
 
-function randomColor() {
-  return {
-    r: Math.floor(Math.random() * 255),
-    g: Math.floor(Math.random() * 255),
-    b: Math.floor(Math.random() * 255)
-  };
-}
+var BRIGHT = 10000;
 
-function postNewColor(color) {
+// function randomColor() {
+//   return {
+//     r: Math.floor(Math.random() * 255),
+//     g: Math.floor(Math.random() * 255),
+//     b: Math.floor(Math.random() * 255)
+//   };
+// }
+
+function postNewBright() {
+  console.log(BRIGHT);
   request({
     method: 'POST',
-    url: config.lifx + '/color',
-    json: color
+    url: config.lifx + '/bright',
+    json: { l: BRIGHT }
   }, function (err, body, resp) {
     console.log(err);
     console.log(resp);
