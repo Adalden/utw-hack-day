@@ -1,8 +1,11 @@
 // --- Require Dependencies ----------------------------------------------------
 
-var lifx = require('lifx');
-var   lx = lifx.init();
+var ee = require('../utils/events');
 
 // --- Module Exports ----------------------------------------------------------
 
-module.exports = lx;
+module.exports = function (io) {
+  ee.on('status', function (data) {
+    io.sockets.emit('status', data);
+  });
+};
