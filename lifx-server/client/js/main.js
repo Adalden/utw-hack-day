@@ -9,11 +9,20 @@ document.getElementById('offBtn').addEventListener('click', function () {
 function setColor(obj) {
   axios.post('/color', obj);
 };
-var dSetColor = debounce(setColor, 300);
+var dSetColor = debounce(setColor, 100);
 
 document.getElementById('color').addEventListener('change', function () {
   var color = getColor(this.value);
   dSetColor(color);
+});
+
+function setBright(obj) {
+  axios.post('/bright', obj);
+};
+var dSetBright = debounce(setBright, 100);
+
+document.getElementById('bright').addEventListener('change', function () {
+  dSetBright({ l: this.value });
 });
 
 
