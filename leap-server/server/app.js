@@ -7,7 +7,7 @@ var     config = require('config');
 
 // --- Setup Sockets -----------------------------------------------------------
 
-var server = http.Server(app.callback());
+var server = http.createServer(function () {});
 io = io(server);
 
 fs.readdirSync(__dirname + '/sockets').forEach(function (filename) {
