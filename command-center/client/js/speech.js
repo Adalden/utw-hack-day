@@ -10,6 +10,12 @@ document.getElementById('openBlinds').addEventListener('click', function () {
 document.getElementById('closeBlinds').addEventListener('click', function () {
   sendMsg('close:blinds');
 });
+document.getElementById('lightOff').addEventListener('click', function () {
+  sendMsg('light:off');
+});
+document.getElementById('lightOn').addEventListener('click', function () {
+  sendMsg('light:on');
+});
 
 var PHRASES = {
   'open the blinds': 'open:blinds',
