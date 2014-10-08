@@ -10,6 +10,8 @@ module.exports = function (io) {
 
   var swiper = controller.gesture('swipe');
 
+  console.log('swiper setup');
+
   var tolerance = 50;
   var cooloff = 300;
 
