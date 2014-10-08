@@ -7,7 +7,6 @@ var      ee = require('../utils/events');
 // --- Module Exports ----------------------------------------------------------
 
 module.exports = function (io, leapIo, lifxIo, blindsIo) {
-
   ee.on('speech:msg', function (msg) {
     if (msg === 'light:on') {
       turnLightOn();
@@ -15,8 +14,10 @@ module.exports = function (io, leapIo, lifxIo, blindsIo) {
       turnLightOff();
     } else if (msg === 'open:blinds') {
       openBlinds();
+      turnLightOff();
     } else if (msg === 'close:blinds') {
       closeBlinds();
+      turnLightOn();
     }
   });
 };
@@ -47,16 +48,26 @@ function turnLightOff() {
 
 function openBlinds() {
   console.log('openBlinds');
-  request({
+  console.log(config.blinds + '/rotate/90');
+  var r = request({
     method: 'GET',
     url: config.blinds + '/rotate/90'
+  });
+
+  r.on('error', function (err) {
+    console.log(err);
   });
 }
 
 function closeBlinds() {
   console.log('closeBlinds');
-  request({
+  console.log(config.blinds + '/rotate/180');
+  var r = request({
     method: 'GET',
-    url: config.blinds + '/rotate/0'
+    url: config.blinds + '/rotate/180'
+  });
+
+  r.on('error', function (err) {
+    console.log(err);
   });
 }
